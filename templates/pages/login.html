@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Login | CryptoPay</title>
+  <link rel="stylesheet" href="{% static 'pages/main.css' %}">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+
+<body style="background: darkorchid;">
+  <div class="login-page">
+    <div class="form" style="width: 95%;">
+      <h2>Welcome to CryptoPay</h2>
+      <h5>LogIn</h5>
+      <form class="login-form" action="#" method="POST">
+        {% csrf_token %}
+        <input type="email" placeholder="email" name="email">
+        <input type="password" placeholder="password" name="password">
+        <button style="background: darkorchid;">login</button>
+        <p class="message">Not registered? <a href="{% url 'signup' %}" style="color: darkorchid;">Create an account</a></p>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

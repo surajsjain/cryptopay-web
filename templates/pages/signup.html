@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sign Up | CryptoPay</title>
+  <link rel="stylesheet" href="{% static 'pages/main.css' %}">
+  <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+</head>
+
+<body style="background: darkorchid;">
+  <div class="login-page">
+    <div class="form" style="width: 95%;">
+      <h2>Welcome to CryptoPay</h2>
+      <h5>Sign Up</h5>
+      <p style="font-size: small;">
+        Note: It is advised to enter the same email that you would choose to give the e-commerce stores in order for your transactions to synchronize into your phone automatically
+      </p>
+      <form class="login-form" action="#" method="POST">
+        {% csrf_token %}
+        <input type="firstname" placeholder="First Name" name="firstname">
+        <input type="lastname" placeholder="Last Name" name="lastname">
+        <input type="username" placeholder="Username" name="username">
+        <input type="password" placeholder="Password" name="password">
+        <input type="email" placeholder="Email" name="email">
+
+        <input type="radio" name="signtype" id="payer" value="payer"><span>Sign up as a Payer</span></br>
+        <input type="radio" name="signtype" id="seller" value="seller">
+        <label for="seller">Sign up as a Seller</label><br>
+
+        <button style="background: darkorchid; margin-top: 6%;">login</button>
+        <p class="message">Already have an account? <a href="{% url 'login' %}" style="color: darkorchid;">Login</a></p>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
