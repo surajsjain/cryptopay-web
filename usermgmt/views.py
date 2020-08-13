@@ -43,6 +43,7 @@ def signup(request):
         usr_det = UserDetails()
         usr_det.user = user
         usr_det.singtype = inData['signtype']
+        usr_det.ardor_public_key = inData['ardor_public_key']
 
         if(inData['signtype'] == 'seller'):
             usr_det.ardor_acc_num = inData['ardor_acc']
@@ -54,7 +55,7 @@ def signup(request):
             return redirect('dash_home')
 
         else:
-            return redirect('login')
+            return redirect('phonedownload')
 
 def phoneDownload(request):
     return render(request, 'pages/phoneLogIn.html')

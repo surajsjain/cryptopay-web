@@ -9,116 +9,50 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
+          {% if transactions|length != 0 %}
           <table class="table">
             <thead class=" text-primary">
               <tr>
                 <th>Date &amp; Time</th>
                 <th>Checkout Code</th>
+                <th>Customer Email</th>
+                <th>API Key</th>
                 <th>Status</th>
                 <th class="text-right">Amount</th>
               </tr>
             </thead>
             <tbody>
+              {% for transaction in transactions %}
               <tr>
                 <td>
-                  Dakota Rice
+                  {{ transaction.datetime }}
                 </td>
                 <td>
-                  Niger
+                  {{ transaction.checkout_code }}
                 </td>
                 <td>
-                  Oud-Turnhout
+                  {{ transaction.customer.email }}
                 </td>
-                <td class="text-right">
-                  $36,738
+                <td>
+                  {{ transaction.apikey.name }}
                 </td>
+                <td>
+                  {% if transaction.completed %}
+                  Completed
+                  {% else %}
+                  Pending
+                  {% endif %}
+                </td>
+                <td class="text-right">ARDR {{ transaction.amount }}</td>
               </tr>
-              <tr>
-                <td>
-                  Minerva Hooper
-                </td>
-                <td>
-                  Curaçao
-                </td>
-                <td>
-                  Sinaai-Waas
-                </td>
-                <td class="text-right">
-                  $23,789
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Sage Rodriguez
-                </td>
-                <td>
-                  Netherlands
-                </td>
-                <td>
-                  Baileux
-                </td>
-                <td class="text-right">
-                  $56,142
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Philip Chaney
-                </td>
-                <td>
-                  Korea, South
-                </td>
-                <td>
-                  Overland Park
-                </td>
-                <td class="text-right">
-                  $38,735
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Doris Greene
-                </td>
-                <td>
-                  Malawi
-                </td>
-                <td>
-                  Feldkirchen in Kärnten
-                </td>
-                <td class="text-right">
-                  $63,542
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Mason Porter
-                </td>
-                <td>
-                  Chile
-                </td>
-                <td>
-                  Gloucester
-                </td>
-                <td class="text-right">
-                  $78,615
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Jon Porter
-                </td>
-                <td>
-                  Portugal
-                </td>
-                <td>
-                  Gloucester
-                </td>
-                <td class="text-right">
-                  $98,615
-                </td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
+          {% else %}
+          <p>
+            It looks like you don't have any transactions yet
+          </p>
+          {% endif %}
         </div>
       </div>
     </div>

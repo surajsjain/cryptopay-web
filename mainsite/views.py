@@ -1,11 +1,24 @@
 from django.shortcuts import render, redirect
 
 from usermgmt.models import APIAccessKey
+from transactions.models import Transaction
+
 from usermgmt.utils import generate_key
 
 # Create your views here.
-def displayPayments(request):
+def displayTransactions(request):
+
+    trs = []
+
+    try:
+        trs = Transaction.objects.filter(seller=request.user)
+        # print(request.use)
+        # print(len(trs))
+    except:
+        pass
+
     ctxt = {
+        'transactions': trs,
         'nav_active' : 'Transactions',
     }
     return render(request, 'dashboard/transactions.html', context=ctxt)

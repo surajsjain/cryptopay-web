@@ -19,8 +19,8 @@
                 <th>Key</th>
               </tr>
             </thead>
-            {% for api_key in api_keys %}
             <tbody>
+              {% for api_key in api_keys %}
               <tr>
                 <td>
                   {{ api_key.name }}
@@ -32,8 +32,8 @@
                   <a href="{% url 'delete_key' key_id=api_key.id %}">Delete</a>
                 </td>
               </tr>
+              {% endfor %}
             </tbody>
-            {% endfor %}
           </table>
         </div>
         {% else %}
