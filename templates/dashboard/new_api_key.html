@@ -1,0 +1,23 @@
+{% extends 'dashboard/base.html' %}
+
+{% block mainContent %}
+<div class="card">
+  <div class="card-header">
+    <h5 class="title">Edit Profile</h5>
+  </div>
+  <div class="card-body">
+    <form action="{% url 'new_key' %}" method='POST'>
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-4 px-1">
+          <div class="form-group" style="margin-left: 5%;">
+            <label>Key Name</label>
+            <input type="text" class="form-control" placeholder="My First App" name="name">
+            <input type="submit" value="submit" style="margin-top: 5%;background: orangered;border: 0;padding: 2%;border-radius: 12px;color: white;padding-left:6%;padding-right:6%">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'dashboard/base.html' %}
+
+{% block mainContent %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Your API Keys</h4>
+      </div>
+      <div class="card-body">
+        <a href="{% url 'new_key' %}" style="background: #f96332;color: white;padding: 1%;text-decoration: none;border-radius: 15px;">+ Add a new API Key</a><br><br>
+
+        {% if api_keys|length != 0 %}
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <tr>
+                <th>Name</th>
+                <th>Key</th>
+              </tr>
+            </thead>
+            {% for api_key in api_keys %}
+            <tbody>
+              <tr>
+                <td>
+                  {{ api_key.name }}
+                </td>
+                <td>
+                  {{ api_key.key }}
+                </td>
+                <td>
+                  <a href="{% url 'delete_key' key_id=api_key.id %}">Delete</a>
+                </td>
+              </tr>
+            </tbody>
+            {% endfor %}
+          </table>
+        </div>
+        {% else %}
+        <p>It looks like you've got no API keys, create a new one</p>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
