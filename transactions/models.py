@@ -5,6 +5,7 @@ from usermgmt.models import APIAccessKey
 
 # Create your models here.
 class Transaction(models.Model):
+    chain = models.IntegerField(default=1)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     apikey = models.ForeignKey(APIAccessKey, on_delete=models.CASCADE, default=None)
     datetime = models.DateTimeField(auto_now_add=True)

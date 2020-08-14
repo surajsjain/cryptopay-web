@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -32,18 +33,32 @@ class RegisterTransaction(APIView):
                 tr.customer = User.objects.get(email=data['customer_email'])
             except:
                 return Response({"transaction_status": "customer not found"})
+
             tr.amount = data['amount']
+            tr.chain = data['chain']
             tr.save()
+
+            print('Tr AMT: '+str(tr.amount))
 
             tr.checkout_code = ("".join(tr.apikey.name.split(" ")))+'-'+str(tr.id)
             tr.save()
+
 
             # TODO: add sushranth's functions to get tr.transaction_res (Transaction json)
             seller_det = UserDetails.objects.get(user = seller)
             customer_det = UserDetails.objects.get(user = tr.customer)
 
-            transactionJSON = ardor_access.get_unsigned_transaction_bytes(receiver_account_id=seller_det.ardor_acc_num, sender_public_key=customer_det.ardor_public_key, payment_amount=data['amount'])
+            # print('Seller details: '+str(seller_det))
+            # print('customer details: '+str(customer_det))
+
+            transactionJSON = ardor_access.get_unsigned_transaction_bytes(receiver_account_id=seller_det.ardor_acc_num, sender_public_key=customer_det.ardor_public_key, payment_amount=tr.amount, chain=tr.chain)
+
+            print('Transaction JSON: \n'+str(transactionJSON))
+
             transactionJSON_str = json.dumps(transactionJSON)
+
+            print(transactionJSON_str)
+
             tr.transaction_res = transactionJSON_str
             tr.save()
 
@@ -54,7 +69,21 @@ class RegisterTransaction(APIView):
 
 class ConfirmTransaction(APIView):
     def get(self, request, format=None):
-        return Response({"Message": "Try the POST request, GET request can\'t be done on this API"})
+        data = request.data
+
+        key = APIAccessKey.objects.get(key = data['key'])
+        seller = key.user
+        customer = User.objects.get(email = data['customer_email'])
+
+        confirmed_transactions = Transaction.objects.filter(Q(seller = seller) & Q(customer = customer) & Q(completed = True))
+
+        conf_tr = []
+        for transaction in confirmed_transactions:
+            conf_tr.append(transaction.checkout_code)
+
+        res = {"confirmed_transactions": conf_tr}
+
+        return Response(res)
 
     def post(self, request, format=None):
         data = request.data

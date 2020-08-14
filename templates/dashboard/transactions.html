@@ -47,7 +47,13 @@
                 </td>
                 {% endif %}
 
-                <td class="text-right">ARDR {{ transaction.amount }}</td>
+                <td class="text-right">
+                  {% if transaction.chain == 1 %}
+                  ARDR
+                  {% else %}
+                  IGNIS
+                  {% endif %}
+                  {{ transaction.amount }}</td>
               </tr>
               {% endfor %}
             </tbody>

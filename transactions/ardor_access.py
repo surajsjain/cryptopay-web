@@ -3,11 +3,16 @@ import json
 
 from django.conf import settings
 
-def get_unsigned_transaction_bytes(receiver_account_id,payment_amount,sender_public_key):
+def get_unsigned_transaction_bytes(receiver_account_id,payment_amount,sender_public_key,chain=1):
+
+    print('Function Called')
+
     base = settings.ARDOR_REQUEST_BASE_URL
     payment_amount = payment_amount * (10**8)
     # print(base+'nxt?chain=1&requestType=sendMoney&recipient='+receiver_account_id+'&publicKey='+public_key+'&amountNQT='+payment_amount+'&feeNQT=1&deadline=60')
-    data=requests.post(base+'nxt?chain=1&requestType=sendMoney&recipient='+str(receiver_account_id)+'&publicKey='+str(sender_public_key)+'&amountNQT='+str(payment_amount)+'&feeNQT=-1&deadline=10')
+    print('Making a Request')
+    data=requests.post(base+'nxt?chain='+str(chain)+'&requestType=sendMoney&recipient='+str(receiver_account_id)+'&publicKey='+str(sender_public_key)+'&amountNQT='+str(payment_amount)+'&feeNQT=-1&deadline=10')
+    print('request completed')
     # print(type(data))
     x=data.json()
     # print(type(x))
