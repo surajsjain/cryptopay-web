@@ -36,13 +36,17 @@
                 <td>
                   {{ transaction.apikey.name }}
                 </td>
-                <td>
-                  {% if transaction.completed %}
+
+                {% if transaction.completed %}
+                <td style="color: green;">
                   Completed
-                  {% else %}
-                  Pending
-                  {% endif %}
                 </td>
+                {% else %}
+                <td style="color: darkorange;">
+                  Pending
+                </td>
+                {% endif %}
+
                 <td class="text-right">ARDR {{ transaction.amount }}</td>
               </tr>
               {% endfor %}

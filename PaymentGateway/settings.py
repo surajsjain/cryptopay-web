@@ -131,3 +131,5 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+ARDOR_REQUEST_BASE_URL = 'https://testardor.jelurida.com/'
