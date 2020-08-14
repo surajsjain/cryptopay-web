@@ -9,8 +9,10 @@ from rest_framework.views import APIView
 from . models import *
 from . import ardor_access
 from usermgmt.models import APIAccessKey, UserDetails
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 class RegisterTransaction(APIView):
+    permission_classes = [AllowAny]
 
     def get(self, request, format=None):
         return Response({"Message": "Try the POST request, GET request can\'t be done on this API"})
@@ -68,6 +70,7 @@ class RegisterTransaction(APIView):
             return Response({"transaction_status": "error"})
 
 class ConfirmTransaction(APIView):
+    permission_classes = [AllowAny]
     def get(self, request, format=None):
         data = request.data
 
@@ -114,3 +117,23 @@ class ConfirmTransaction(APIView):
 
         except:
             return Response({"transaction_status": "error"})
+
+
+class PendingTransactions(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        pending_transasctions = Transaction.objects.filter(Q(customer = request.user) & Q(completed = False))
+
+        trs = []
+        for transaction in pending_transasctions:
+            tr = {}
+            tr['checkout_code'] = transaction.checkout_code
+            tr['amount'] = transaction.amount
+            tr['chain'] = transaction.chain
+            trs.append(tr)
+
+        return Response({"transactions": trs})
+
+    def post(self, request, format=None):
+        return Response({"Message": "Try the GET method"})
