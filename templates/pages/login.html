@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="{% static 'pages/main.css' %}">
 </head>
 
-<body style="background: darkorchid;">
+<body style="background: rgb(51, 4, 75);">
   <div class="login-page">
     <div class="form" style="width: 95%;">
       <h2>Welcome to CryptoPay</h2>
@@ -18,7 +18,7 @@
         {% csrf_token %}
         <input type="email" placeholder="email" name="email">
         <input type="password" placeholder="password" name="password">
-        <button style="background: darkorchid;">login</button>
+        <button style="background: rgb(113, 4, 168); ">login</button>
         <p class="message">Not registered? <a href="{% url 'signup' %}" style="color: darkorchid;">Create an account</a></p>
       </form>
     </div>
